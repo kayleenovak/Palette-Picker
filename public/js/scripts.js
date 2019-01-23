@@ -9,7 +9,11 @@ function generateNewPalette() {
     const hexCode = generateHexCode()
     const frozenColor = freezeColor(i)
     if(frozenColor === false) {
-      paletteColors.push(hexCode)
+      paletteColors[i] = hexCode
+    } else {
+      const colors = $('.color')
+      console.log(colors[i])
+      paletteColors[i] = convertRGBToHex(colors[i].style.background)
     }
   }
   updatePaletteColors(paletteColors)
@@ -34,6 +38,7 @@ function updatePaletteColors(paletteColors) {
 
 function updateHexCodes(paletteColors) {
   $('.hex-code').each(function(index) {
+    console.log(paletteColors)
     this.innerText = `#${paletteColors[index]}`
   })
 }
@@ -50,9 +55,33 @@ function toggleLock(e) {
 
 function freezeColor(i) {
   const locks = $('.lock')
-  if($(locks[i]).hasClass('unlock-img')) {
+  console.log(locks[i].classList.contains('unlock-img'))
+  if(locks[i].classList.contains('unlock-img')) {
     return false
   } else {
     return true
   }
+}
+
+function convertToHex(color) {
+  const hexColor = parseInt(color).toString(16);
+  console.log(color, hexColor)
+  let hexColorCode
+  if (hexColor.length === 1) {
+    hexColorCode = '0' + hexColor
+  } else {
+    hexColorCode = hexColor
+  }
+  return hexColorCode.toUpperCase()
+}
+
+function convertRGBToHex(rgb) {
+  const splitRgb = splitRGB(rgb)
+  const hexCode = convertToHex(splitRgb[1]) + convertToHex(splitRgb[2]) + convertToHex(splitRgb[3])
+  return hexCode
+}
+
+function splitRGB(string) {
+  const newString = string.replace('(', ',').replace(')', '').split(',')
+  return newString
 }
