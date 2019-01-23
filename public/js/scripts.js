@@ -7,7 +7,10 @@ function generateNewPalette() {
   let paletteColors = []
   for (let i = 0; i < 5; i++) {
     const hexCode = generateHexCode()
-    paletteColors.push(hexCode)
+    const frozenColor = freezeColor(i)
+    if(frozenColor === false) {
+      paletteColors.push(hexCode)
+    }
   }
   updatePaletteColors(paletteColors)
   updateHexCodes(paletteColors)
@@ -24,8 +27,8 @@ function generateHexCode() {
 }
 
 function updatePaletteColors(paletteColors) {
-  $('.color').each(function(index) {
-    this.style.background = `#${paletteColors[index]}`
+  $('.color').each(function(i) {
+    this.style.background = `#${paletteColors[i]}`
   })
 }
 
@@ -42,5 +45,14 @@ function toggleLock(e) {
   } else {
     $(e.target).removeClass('lock-img')
     $(e.target).addClass('unlock-img')  
+  }
+}
+
+function freezeColor(i) {
+  const locks = $('.lock')
+  if($(locks[i]).hasClass('unlock-img')) {
+    return false
+  } else {
+    return true
   }
 }
