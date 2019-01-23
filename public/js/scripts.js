@@ -7,6 +7,7 @@ function generateNewPalette() {
     paletteColors.push(hexCode)
   }
   updatePaletteColors(paletteColors)
+  updateHexCodes(paletteColors)
 }
 
 function generateHexCode() {
@@ -21,7 +22,12 @@ function generateHexCode() {
 
 function updatePaletteColors(paletteColors) {
   $('.color').each(function(index) {
-    console.log(this)
     this.style.background = `#${paletteColors[index]}`
+  })
+}
+
+function updateHexCodes(paletteColors) {
+  $('.hex-code').each(function(index) {
+    this.innerText = `#${paletteColors[index]}`
   })
 }
