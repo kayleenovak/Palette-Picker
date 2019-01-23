@@ -16,11 +16,12 @@ header {
   font-family: 'Roboto', sans-serif;
   grid-column: 1 / span 2;
 }
+
 /* Palette Container Styling */
 
 .palette-container {
   display: grid;
-  grid-template-rows: 480px repeat(2, 1fr);
+  grid-template-rows: 460px repeat(2, 1fr);
   background: white;
   padding: 10px;
 }
@@ -69,7 +70,32 @@ header {
   height: 40px;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
+  margin: auto;
 }
+
+.save-palette-container {
+  margin: auto;
+}
+
+.select-project {
+  width: 100px;
+}
+
+.name-palette-input {
+  height: 25px;
+  width: 250px;
+}
+
+.save-palette-btn {
+  width: 100px;
+  background: #1E2C47;
+  color: #03DCCE;
+  font-family: 'Roboto', sans-serif;
+  height: 25px;
+  font-size: 14px;
+}
+
+/* End Palette Container Styling */
 
 /* Project Section */
 
@@ -119,6 +145,7 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .palette-name {
