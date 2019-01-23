@@ -1,5 +1,7 @@
 $('.generate-palette-btn').on('click', generateNewPalette)
 
+generateNewPalette()
+
 function generateNewPalette() {
   let paletteColors = []
   for (let i = 0; i < 5; i++) {

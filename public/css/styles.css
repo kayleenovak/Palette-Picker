@@ -32,35 +32,27 @@ header {
   width: 100%;
 }
 
+.palette-color-container {
+  position: relative;
+}
+
 .color {
   height: 425px;
   text-align: center;
-}
-
-.color-one {
-  background: #1E2C47;
-}
-
-.color-two {
-  background: #006086;
-}
-
-.color-three {
-  background: #03DCCE;
-}
-
-.color-four {
-  background: #FFE25A;
-}
-
-.color-five {
-  background: #A5ABB5;
 }
 
 .hex-code {
   margin-top: 10px;
   color: #1E2C47;
   font-family: 'Roboto', sans-serif;
+}
+
+.lock-img {
+ position: absolute;
+ top: 10px;
+ right: 10px;
+ height: 30px;
+ filter: drop-shadow(1px 1px 1px white);
 }
 
 .generate-palette-btn {
