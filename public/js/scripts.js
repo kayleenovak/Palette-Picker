@@ -88,3 +88,7 @@ function createNewProject() {
     </section>`
   $('.color-container').append(newProject)
 }
+
+function toggleDisplayCreateProject() {
+  $('.new-project-section').style.display = 'block'
+}
