@@ -1,4 +1,5 @@
 $('.generate-palette-btn').on('click', generateNewPalette)
+$('.unlock-img').on('click', toggleLock)
 
 generateNewPalette()
 
@@ -32,4 +33,15 @@ function updateHexCodes(paletteColors) {
   $('.hex-code').each(function(index) {
     this.innerText = `#${paletteColors[index]}`
   })
+}
+
+function toggleLock(e) {
+  console.log(e)
+  if($(e.target).hasClass('unlock-img')) {
+    $(e.target).removeClass('unlock-img')
+    $(e.target).addClass('lock-img')
+  } else {
+    $(e.target).removeClass('lock-img')
+    $(e.target).addClass('unlock-img')  
+  }
 }
