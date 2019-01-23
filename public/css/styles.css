@@ -7,7 +7,7 @@ body {
   display: grid;
   grid-gap: 20px;
   grid-template-columns: 2fr 1fr;
-  margin: 20px;
+  margin: 0 20px  20px 20px;
 }
 
 header {
@@ -55,7 +55,7 @@ header {
  width: 30px;
  background-image: url('../images/unlock.svg');
  background-size: cover;
- filter: drop-shadow(2px 2px 2px white)
+ filter: drop-shadow(0px 0px 4px white)
 }
 
 .lock-img {
@@ -66,7 +66,7 @@ header {
   width: 30px;
   background-image: url('../images/lock.svg');
   background-size: cover;
-  filter: drop-shadow(2px 2px 2px white)
+  filter: drop-shadow(0px 0px 4px white)
 }
 
 .generate-palette-btn {

@@ -6,13 +6,11 @@ generateNewPalette()
 function generateNewPalette() {
   let paletteColors = []
   for (let i = 0; i < 5; i++) {
-    const hexCode = generateHexCode()
     const frozenColor = freezeColor(i)
     if(frozenColor === false) {
-      paletteColors[i] = hexCode
+      paletteColors[i] = generateHexCode()
     } else {
       const colors = $('.color')
-      console.log(colors[i])
       paletteColors[i] = convertRGBToHex(colors[i].style.background)
     }
   }
@@ -65,7 +63,6 @@ function freezeColor(i) {
 
 function convertToHex(color) {
   const hexColor = parseInt(color).toString(16);
-  console.log(color, hexColor)
   let hexColorCode
   if (hexColor.length === 1) {
     hexColorCode = '0' + hexColor
