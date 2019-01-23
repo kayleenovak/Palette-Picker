@@ -59,6 +59,7 @@ header {
 .hex-code {
   margin-top: 10px;
   color: #1E2C47;
+  font-family: 'Roboto', sans-serif;
 }
 
 .generate-palette-btn {
@@ -69,6 +70,8 @@ header {
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
 }
+
+/* Project Section */
 
 .project-container {
   background: white;
@@ -81,7 +84,7 @@ header {
   color: #1E2C47;
   font-family: 'Roboto', sans-serif;
   font-size: 25px;
-  margin: 0px;
+  margin: 0 0 10px 0;
 }
 
 .add-project-btn {
@@ -94,24 +97,53 @@ header {
 .projects {
   background: #006086;
   padding: 10px;
+  height: 520px;
+  min-width: 410px;
 }
 
 .project {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .project-name {
   font-size: 20px;
   color: #FFE25A;
   margin: 0 0 5px 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 .color-container {
   background: white;
   padding: 10px;
+  box-shadow: 2px 2px 10px black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.palette-name {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #1E2C47;
+  font-size: 16px;
+  display: inline-block;
+  min-width: 100px;
+}
+
+.project-colors {
+  display: inline-block;
+  height: 30px;
 }
 
 .project-color {
   height: 30px;
   width: 30px;
+  background: black;
+  margin: 0 5px;
+  display: inline-block;
+}
+
+.delete-palette-btn {
+  height: 25px;
+  margin-left: 10px;
 }
