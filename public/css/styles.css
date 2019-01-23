@@ -112,6 +112,16 @@ header {
   position: relative;
 }
 
+.new-project-section {
+  height: 200px;
+  width: 300px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #1E2C47;
+  display: none;
+}
+
 .projects-heading {
   color: #1E2C47;
   font-family: 'Roboto', sans-serif;
