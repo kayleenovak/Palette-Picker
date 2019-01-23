@@ -2,41 +2,61 @@
 <html>
 <head>
   <title>Palette Picker</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="./css/styles.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
   <header>Palette Picker</header>
   <section class='palette-container'>
-
-  </section>
-  <section class="project-container">
     <section class="palette-colors">
-      <article class="color">
-        <div class="color color-one"></div>
-        <h3 class="hex-code">#FFFFFF</h3>
-      </article>      
-      <article class="color">
-          <div class="color color-two"></div>
+        <article class="color">
+          <div class="color color-one"></div>
           <h3 class="hex-code">#FFFFFF</h3>
-      </article>
-      <article class="color">
-          <div class="color color-three"></div>
+        </article>      
+        <article class="color">
+            <div class="color color-two"></div>
+            <h3 class="hex-code">#FFFFFF</h3>
+        </article>
+        <article class="color">
+            <div class="color color-three"></div>
+            <h3 class="hex-code">#FFFFFF</h3>
+          </article>
+        <article class="color">
+          <div class="color color-four"></div>
           <h3 class="hex-code">#FFFFFF</h3>
         </article>
-      <article class="color">
-        <div class="color color-four"></div>
-        <h3 class="hex-code">#FFFFFF</h3>
-      </article>
-      <article class="color">
-        <div class="color color-five"></div>
-        <h3 class="hex-code">#FFFFFF</h3>
+        <article class="color">
+          <div class="color color-five"></div>
+          <h3 class="hex-code">#FFFFFF</h3>
+        </article>
+      </section>
+      <button class="generate-palette-btn">Generate Palette</button>
+      <section class="save-palette-container">
+        <form>
+          <select>
+            <option value="project">Project One</option>
+          </select>
+          <input type="text" />
+          <button class="save=palette-btn">Save Palette</button>
+        </form>
+      </section>
+  </section>
+  <section class="project-container">
+    <h3>Projects</h3>
+    <img class="add-project-btn"  src="./images/add.svg"/>
+    <section class="projects">
+      <article>
+        <h6>Project 1</h6>
+        <div class="color-container"></div>
+        <div class="color-container"></div>
+        <div class="color-container"></div>
+        <div class="color-container"></div>
+        <div class="color-container"></div>
       </article>
     </section>
-    <button>Generate Palette</button>
   </section>
 </body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script type="text/javascript" src="script.js"></script>
+<script type="text/javascript" src="./js/script.js"></script>
 </html>

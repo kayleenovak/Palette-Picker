@@ -1,0 +1,10 @@
+body {
+  background: #1E2C47
+}
+
+/* Palette Container Styling */
+
+.palette-container {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr)
+}
