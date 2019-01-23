@@ -1,54 +1,84 @@
 body {
-  background: #1E2C47
+  background: #1E2C47;
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 2fr 1fr;
+  margin: 20px;
 }
 
 header {
   color: #FFE25A;
   font-size: 37px;
   font-family: 'Roboto', sans-serif;
+  grid-column: 1 / span 2;
 }
 /* Palette Container Styling */
 
 .palette-container {
   display: grid;
-  grid-template-rows: 450px repeat(2, 1fr);
+  grid-template-rows: 480px repeat(2, 1fr);
   background: white;
   padding: 10px;
-  width: 750px;
 }
 
 .palette-colors {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
 }
 
 .color {
-  height: 375px;
-  width: 150px;
+  height: 425px;
   text-align: center;
 }
 
 .color-one {
-  background: black;
+  background: #1E2C47;
 }
 
 .color-two {
-  background: blue;
+  background: #006086;
 }
 
 .color-three {
-  background: red;
+  background: #03DCCE;
 }
 
 .color-four {
-  background: yellow;
+  background: #FFE25A;
 }
 
 .color-five {
-  background: orange;
+  background: #A5ABB5;
 }
 
 .hex-code {
   margin-top: 10px;
+  color: #1E2C47;
 }
 
+.generate-palette-btn {
+  background: #1E2C47;
+  width: 250px;
+  color: #03DCCE;
+  height: 40px;
+  font-size: 20px;
+  font-family: 'Roboto', sans-serif;
+}
 
+.project-container {
+  background: white;
+  margin: 0;
+  padding: 10px;
+}
+
+.projects-heading {
+  color: #1E2C47;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  margin: 0px;
+}
+
+.add-project-btn {
+  height: 25px;
+}
