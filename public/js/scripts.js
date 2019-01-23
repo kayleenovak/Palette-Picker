@@ -36,7 +36,6 @@ function updatePaletteColors(paletteColors) {
 
 function updateHexCodes(paletteColors) {
   $('.hex-code').each(function(index) {
-    console.log(paletteColors)
     this.innerText = `#${paletteColors[index]}`
   })
 }
@@ -53,7 +52,6 @@ function toggleLock(e) {
 
 function freezeColor(i) {
   const locks = $('.lock')
-  console.log(locks[i].classList.contains('unlock-img'))
   if(locks[i].classList.contains('unlock-img')) {
     return false
   } else {
@@ -81,4 +79,12 @@ function convertRGBToHex(rgb) {
 function splitRGB(string) {
   const newString = string.replace('(', ',').replace(')', '').split(',')
   return newString
+}
+
+function createNewProject() {
+  const projectName = $('.name-project-input')
+  const newProject = `<section class="project">
+      <h5 class="project-name">${e.target.previousSibling.value}</h5>
+    </section>`
+  $('.color-container').append(newProject)
 }
