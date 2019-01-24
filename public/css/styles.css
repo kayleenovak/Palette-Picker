@@ -126,6 +126,7 @@ header {
 .new-project-heading {
   color: #FFE25A;
   margin-top: 10px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .projects-heading {
@@ -138,7 +139,7 @@ header {
 .projects {
   background: #006086;
   padding: 10px;
-  height: 520px;
+  height: 435px;
   min-width: 410px;
 }
 
