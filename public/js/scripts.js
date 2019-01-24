@@ -2,6 +2,7 @@ $('.generate-palette-btn').on('click', generateNewPalette)
 $('.unlock-img').on('click', toggleLock)
 $('.create-project-btn').on('click', createNewProject)
 $('.save-palette-btn').on('click', savePalette)
+$('.projects').on('click', displayProjectColors)
 
 generateNewPalette()
 
@@ -98,14 +99,12 @@ function savePalette(e) {
   const paletteName = $('.name-palette-input').val()
   const colors = $('.hex-code')
   const savedPalette = `<article class="color-container">
-      <h6 class="palette-name">${paletteName}</h6>
-      <div class="project-colors">
-        <div class='project-color' style='background: ${$(colors[0]).text()}'></div>
-        <div class='project-color' style='background: ${$(colors[1]).text()}'></div>
-        <div class='project-color' style='background: ${$(colors[2]).text()}'></div>
-        <div class='project-color' style='background: ${$(colors[3]).text()}'></div>
-        <div class='project-color' style='background: ${$(colors[4]).text()}'></div>
-      </div>
+      <h6 class="palette-name" id=${paletteName}>${paletteName}</h6>
+      <div class='project-color' style='background: ${$(colors[0]).text()}'></div>
+      <div class='project-color' style='background: ${$(colors[1]).text()}'></div>
+      <div class='project-color' style='background: ${$(colors[2]).text()}'></div>
+      <div class='project-color' style='background: ${$(colors[3]).text()}'></div>
+      <div class='project-color' style='background: ${$(colors[4]).text()}'></div>
       <img src='./images/delete.svg' class="delete-palette-btn"/>
     </article>`
   const selectedProject = $('.select-project option:selected').text()
@@ -122,4 +121,19 @@ function updateProjectSelections() {
     const newOption = `<option value=${$(this).text()}>${$(this).text()}</option>`
     $('.select-project').append(newOption)
   })
+}
+
+function displayProjectColors(e) {
+  const rgbCodes = []
+  if (e.target.classList.contains('project-name') || e.target.classList.contains('project-color')) {
+    const children = $(e.target).parent().children('div')
+    children.each(function() {
+      rgbCodes.push(this.style.background)
+    })
+  }
+  const hexCodes = []
+  for(let i = 0; i < 5; i++) {
+    hexCodes.push(convertRGBToHex(rgbCodes[i]))
+  }
+  updatePaletteColors(hexCodes)
 }
