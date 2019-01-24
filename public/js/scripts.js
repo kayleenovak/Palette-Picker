@@ -95,7 +95,6 @@ saveProjectToDb = async (projectName) => {
     },
     body: JSON.stringify(project)
   })
-  console.log(response)
 }
 
 appendProject = (name) => {
@@ -113,6 +112,25 @@ savePalette = (e) => {
   const hexCodes = [$(colors[0]).text(), $(colors[1]).text(), $(colors[2]).text(), $(colors[3]).text(), $(colors[4]).text()]
   const selectedProject = $('.select-project option:selected').text()
   appendPalette(hexCodes, paletteName, selectedProject)
+  savePaletteToDb(paletteName, hexCodes)
+}
+
+savePaletteToDb = async (name, colors) => {
+  const palettes = {
+    name: name,
+    color_one: colors[0],
+    color_two: colors[1],
+    color_three: colors[2],
+    color_four: colors[3],
+    color_five: colors[4]
+  }
+  const response = await fetch('http://localhost:3000/api/v1/palettes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(project)
+  })
 }
 
 const appendPalette = (colors, name, selectedProject) => {
