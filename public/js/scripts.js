@@ -1,6 +1,5 @@
 $('.generate-palette-btn').on('click', generateNewPalette)
 $('.unlock-img').on('click', toggleLock)
-$('.add-project-btn').on('click', toggleDisplayCreateProject)
 
 generateNewPalette()
 
@@ -88,8 +87,4 @@ function createNewProject() {
       <h5 class="project-name">${e.target.previousSibling.value}</h5>
     </section>`
   $('.color-container').append(newProject)
-}
-
-function toggleDisplayCreateProject() {
-  $('.new-project-section').addClass('display-block')
 }
