@@ -136,4 +136,5 @@ function displayProjectColors(e) {
     hexCodes.push(convertRGBToHex(rgbCodes[i]))
   }
   updatePaletteColors(hexCodes)
+  updateHexCodes(hexCodes)
 }
