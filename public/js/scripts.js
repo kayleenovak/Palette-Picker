@@ -24,14 +24,14 @@ generateHexCode = () => {
 }
 
 updatePaletteColors = (paletteColors) => {
-  $('.color').each(function(i) {
-    this.style.background = `#${paletteColors[i]}`
+  $('.color').each((i, element) => {
+    element.style.background = `#${paletteColors[i]}`
   })
 }
 
 updateHexCodes = (paletteColors) => {
-  $('.hex-code').each(function(index) {
-    this.innerText = `#${paletteColors[index]}`
+  $('.hex-code').each((i, element) => {
+    element.innerText = `#${paletteColors[i]}`
   })
 }
 
@@ -111,7 +111,7 @@ const appendPalette = (colors, name, selectedProject) => {
       <img src='./images/delete.svg' class="delete-palette-btn"/>
     </article>`
   const projects = $('.project-name')
-  $('.project-name').each((index, element) => {
+  $('.project-name').each((i, element) => {
     if ($(element).text() === selectedProject) {
       $(element).parent().append(savedPalette)
     }

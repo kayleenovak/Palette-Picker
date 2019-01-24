@@ -8,9 +8,6 @@ app.set('port', process.env.PORT || 3000)
 
 app.use(express.static('public'))
 
-app.get('/', (request, response) => {
-})
-
 app.get('/api/v1/projects', (request, response) => {
   database('projects').select()
     .then(projects => {
