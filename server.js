@@ -3,6 +3,9 @@ const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser');
+
+app.use( bodyParser.json() );
 
 app.set('port', process.env.PORT || 3000)
 
@@ -28,19 +31,18 @@ app.get('/api/v1/palettes', (request, response) => {
     })
 })
 
-app.put('/api/v1/project', (request, response) => {
+app.post('/api/v1/projects', (request, response) => {
   const project = request.body;
-
   for (let requiredParam of ['project']) {
     if(!project[requiredParam]) {
       return response.status(422)
-        .send({error: `Expected format to create a new project is: { project: <String> }. You are missing a ${ requiredParam } property.`})
+        .send({error: `Expected format to create a new project is: { project: <String> }. You are missing a ${ requiredParam } property.`});
     }
   }
 
   database('projects').insert(project, 'id')
     .then(project => response.status(201).json({ id: project[0] }))
-    .catch(error => response.status(500).json({ error }))
+    .catch(error => response.status(500).json({ error }));
 })
 
 app.listen(3000, () => {

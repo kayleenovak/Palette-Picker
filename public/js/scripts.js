@@ -79,8 +79,23 @@ splitRGB = (string) => {
 createNewProject = (e) => {
   e.preventDefault()
   const projectName = $('.name-project-input').val()
+  saveProjectToDb(projectName)
   appendProject(projectName)
   updateProjectSelections()
+}
+
+saveProjectToDb = async (projectName) => {
+  const project = { 
+    project: projectName
+  }
+  const response = await fetch('http://localhost:3000/api/v1/projects', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(project)
+  })
+  console.log(response)
 }
 
 appendProject = (name) => {
