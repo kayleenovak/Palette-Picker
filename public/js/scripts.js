@@ -1,12 +1,3 @@
-$('.generate-palette-btn').on('click', generateNewPalette)
-$('.unlock-img').on('click', toggleLock)
-$('.create-project-btn').on('click', createNewProject)
-$('.save-palette-btn').on('click', savePalette)
-$('.projects').on('click', displayProjectColors)
-
-generateNewPalette()
-fetchProjects()
-
 function generateNewPalette() {
   let paletteColors = []
   for (let i = 0; i < 5; i++) {
@@ -104,13 +95,19 @@ function savePalette(e) {
   e.preventDefault()
   const paletteName = $('.name-palette-input').val()
   const colors = $('.hex-code')
+  const hexCodes = [$(colors[0]).text(), $(colors[1]).text(), $(colors[2]).text(), $(colors[3]).text(), $(colors[4]).text()]
+  appendPalette(hexCodes, paletteName)
+}
+
+function appendPalette(colors, name) {
+  console.log(colors)
   const savedPalette = `<article class="color-container">
-      <h6 class="palette-name" id=${paletteName}>${paletteName}</h6>
-      <div class='project-color' style='background: ${$(colors[0]).text()}'></div>
-      <div class='project-color' style='background: ${$(colors[1]).text()}'></div>
-      <div class='project-color' style='background: ${$(colors[2]).text()}'></div>
-      <div class='project-color' style='background: ${$(colors[3]).text()}'></div>
-      <div class='project-color' style='background: ${$(colors[4]).text()}'></div>
+      <h6 class="palette-name" id=${name}>${name}</h6>
+      <div class='project-color' style='background: ${colors[0]}'></div>
+      <div class='project-color' style='background: ${colors[1]}'></div>
+      <div class='project-color' style='background: ${colors[2]}'></div>
+      <div class='project-color' style='background: ${colors[3]}'></div>
+      <div class='project-color' style='background: ${colors[4]}'></div>
       <img src='./images/delete.svg' class="delete-palette-btn"/>
     </article>`
   const selectedProject = $('.select-project option:selected').text()
@@ -145,12 +142,36 @@ function displayProjectColors(e) {
   updateHexCodes(hexCodes)
 }
 
-function fetchProjects () {
-  fetch('http://localhost:3000/api/v1/projects')
-    .then(response => response.json())
-    .then(projects => {
-      projects.forEach(project => {
-        appendProject(project.project)
-      })
-    })
+const fetchProjects = async () => {
+  const palettes = await fetchPalettes()
+  const response = await fetch('http://localhost:3000/api/v1/projects')
+  const projects = await response.json()
+  appendSavedProjects(projects, palettes)
 }
+
+const fetchPalettes = async () => {
+  const response = await fetch('http://localhost:3000/api/v1/palettes')
+  const palettes = await response.json()
+  return palettes
+}
+
+const appendSavedProjects = (projects, palettes) => {
+  projects.forEach(project => {
+    appendProject(project.project)
+    const matchingPalettes = palettes.filter(palette => {
+      return palette.project_id === project.id
+    }).forEach(palette => {
+      const colors = [palette.color_one, palette.color_two, palette.color_three, palette.color_four, palette.color_five]
+      appendPalette(colors, palette.name)
+    })
+  })
+}
+
+generateNewPalette()
+fetchProjects()
+
+$('.generate-palette-btn').on('click', generateNewPalette)
+$('.unlock-img').on('click', toggleLock)
+$('.create-project-btn').on('click', createNewProject)
+$('.save-palette-btn').on('click', savePalette)
+$('.projects').on('click', displayProjectColors)

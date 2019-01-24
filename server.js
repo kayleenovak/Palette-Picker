@@ -14,7 +14,6 @@ app.get('/', (request, response) => {
 app.get('/api/v1/projects', (request, response) => {
   database('projects').select()
     .then(projects => {
-      console.log(projects)
       response.status(200).json(projects)
     })
     .catch(error => {
