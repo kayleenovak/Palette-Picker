@@ -5,6 +5,7 @@ $('.save-palette-btn').on('click', savePalette)
 $('.projects').on('click', displayProjectColors)
 
 generateNewPalette()
+fetchProjects()
 
 function generateNewPalette() {
   let paletteColors = []
@@ -137,4 +138,13 @@ function displayProjectColors(e) {
   }
   updatePaletteColors(hexCodes)
   updateHexCodes(hexCodes)
+}
+
+function fetchProjects () {
+  fetch('http://localhost:3000/api/v1/projects')
+    .then(response => response.json())
+    .then(projects => {
+      console.log(projects)  
+      return projects
+    })
 }
