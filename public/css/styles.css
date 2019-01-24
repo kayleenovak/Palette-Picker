@@ -177,11 +177,6 @@ header {
   min-width: 100px;
 }
 
-.project-colors {
-  display: inline-block;
-  height: 30px;
-}
-
 .project-color {
   height: 30px;
   width: 30px;
