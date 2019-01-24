@@ -1,4 +1,4 @@
-function generateNewPalette() {
+generateNewPalette = () => {
   let paletteColors = []
   for (let i = 0; i < 5; i++) {
     const frozenColor = freezeColor(i)
@@ -13,7 +13,7 @@ function generateNewPalette() {
   updateHexCodes(paletteColors)
 }
 
-function generateHexCode() {
+generateHexCode = () => {
   const letters = ['A', 'B', 'C', 'D', 'E', 'F', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
   let hexCode = ''
   for (let i = 0; i < 6; i++) {
@@ -23,19 +23,19 @@ function generateHexCode() {
   return hexCode
 }
 
-function updatePaletteColors(paletteColors) {
+updatePaletteColors = (paletteColors) => {
   $('.color').each(function(i) {
     this.style.background = `#${paletteColors[i]}`
   })
 }
 
-function updateHexCodes(paletteColors) {
+updateHexCodes = (paletteColors) => {
   $('.hex-code').each(function(index) {
     this.innerText = `#${paletteColors[index]}`
   })
 }
 
-function toggleLock(e) {
+toggleLock = (e) => {
   if($(e.target).hasClass('unlock-img')) {
     $(e.target).removeClass('unlock-img')
     $(e.target).addClass('lock-img')
@@ -45,7 +45,7 @@ function toggleLock(e) {
   }
 }
 
-function freezeColor(i) {
+freezeColor = (i) => {
   const locks = $('.lock')
   if(locks[i].classList.contains('unlock-img')) {
     return false
@@ -54,7 +54,7 @@ function freezeColor(i) {
   }
 }
 
-function convertToHex(color) {
+convertToHex = (color) => {
   const hexColor = parseInt(color).toString(16);
   let hexColorCode
   if (hexColor.length === 1) {
@@ -65,25 +65,25 @@ function convertToHex(color) {
   return hexColorCode.toUpperCase()
 }
 
-function convertRGBToHex(rgb) {
+convertRGBToHex = (rgb) => {
   const splitRgb = splitRGB(rgb)
   const hexCode = convertToHex(splitRgb[1]) + convertToHex(splitRgb[2]) + convertToHex(splitRgb[3])
   return hexCode
 }
 
-function splitRGB(string) {
+splitRGB = (string) => {
   const newString = string.replace('(', ',').replace(')', '').split(',')
   return newString
 }
 
-function createNewProject(e) {
+createNewProject = (e) => {
   e.preventDefault()
   const projectName = $('.name-project-input').val()
   appendProject(projectName)
   updateProjectSelections()
 }
 
-function appendProject(name) {
+appendProject = (name) => {
   const newProject = `<section class="project">
       <h5 class="project-name">${name}</h5>
     </section>`
@@ -91,16 +91,16 @@ function appendProject(name) {
   updateProjectSelections()
 }
 
-function savePalette(e) {
+savePalette = (e) => {
   e.preventDefault()
   const paletteName = $('.name-palette-input').val()
   const colors = $('.hex-code')
   const hexCodes = [$(colors[0]).text(), $(colors[1]).text(), $(colors[2]).text(), $(colors[3]).text(), $(colors[4]).text()]
-  appendPalette(hexCodes, paletteName)
+  const selectedProject = $('.select-project option:selected').text()
+  appendPalette(hexCodes, paletteName, selectedProject)
 }
 
-function appendPalette(colors, name) {
-  console.log(colors)
+const appendPalette = (colors, name, selectedProject) => {
   const savedPalette = `<article class="color-container">
       <h6 class="palette-name" id=${name}>${name}</h6>
       <div class='project-color' style='background: ${colors[0]}'></div>
@@ -110,28 +110,28 @@ function appendPalette(colors, name) {
       <div class='project-color' style='background: ${colors[4]}'></div>
       <img src='./images/delete.svg' class="delete-palette-btn"/>
     </article>`
-  const selectedProject = $('.select-project option:selected').text()
-  $('.project-name').each(function() {
-    if ($(this).text() === selectedProject) {
-      $(this).parent().append(savedPalette)
+  const projects = $('.project-name')
+  $('.project-name').each((index, element) => {
+    if ($(element).text() === selectedProject) {
+      $(element).parent().append(savedPalette)
     }
   })
 }
 
-function updateProjectSelections() {
+updateProjectSelections = () => {
   const projectNames = $('.project-name')
-  projectNames.each(function(i) {
-    const newOption = `<option value=${$(this).text()}>${$(this).text()}</option>`
+  projectNames.each((i, element) => {
+    const newOption = `<option value=${$(element).text()}>${$(element).text()}</option>`
     $('.select-project').append(newOption)
   })
 }
 
-function displayProjectColors(e) {
+displayProjectColors = (e) => {
   const rgbCodes = []
   if (e.target.classList.contains('project-name') || e.target.classList.contains('project-color')) {
     const children = $(e.target).parent().children('div')
-    children.each(function() {
-      rgbCodes.push(this.style.background)
+    children.each((i, element) => {
+      rgbCodes.push(element.style.background)
     })
   }
   const hexCodes = []
@@ -142,17 +142,17 @@ function displayProjectColors(e) {
   updateHexCodes(hexCodes)
 }
 
+const fetchPalettes = async () => {
+  const response = await fetch('http://localhost:3000/api/v1/palettes')
+  const palettes = await response.json()
+  return palettes
+}
+
 const fetchProjects = async () => {
   const palettes = await fetchPalettes()
   const response = await fetch('http://localhost:3000/api/v1/projects')
   const projects = await response.json()
   appendSavedProjects(projects, palettes)
-}
-
-const fetchPalettes = async () => {
-  const response = await fetch('http://localhost:3000/api/v1/palettes')
-  const palettes = await response.json()
-  return palettes
 }
 
 const appendSavedProjects = (projects, palettes) => {
@@ -162,7 +162,7 @@ const appendSavedProjects = (projects, palettes) => {
       return palette.project_id === project.id
     }).forEach(palette => {
       const colors = [palette.color_one, palette.color_two, palette.color_three, palette.color_four, palette.color_five]
-      appendPalette(colors, palette.name)
+      appendPalette(colors, palette.name, project.project)
     })
   })
 }
