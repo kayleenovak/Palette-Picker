@@ -90,8 +90,18 @@ function createNewProject(e) {
       <h5 class="project-name">${projectName}</h5>
     </section>`
   $('.projects').append(newProject)
+  updateProjectSelections()
 }
 
 function savePalette() {
+  const paletteName = $('.name-palette-input').val()
+}
 
+function updateProjectSelections() {
+  const projectNames = $('.project-name')
+  console.log(projectNames)
+  projectNames.each(function(i) {
+    const newOption = `<option value=${$(this).text()}>${$(this).text()}</option>`
+    $('.select-project').append(newOption)
+  })
 }
