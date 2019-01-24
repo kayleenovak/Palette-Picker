@@ -93,13 +93,31 @@ function createNewProject(e) {
   updateProjectSelections()
 }
 
-function savePalette() {
+function savePalette(e) {
+  e.preventDefault()
   const paletteName = $('.name-palette-input').val()
+  const colors = $('.hex-code')
+  const savedPalette = `<article class="color-container">
+      <h6 class="palette-name">${paletteName}</h6>
+      <div class="project-colors">
+        <div class='project-color' style='background: ${$(colors[0]).text()}'></div>
+        <div class='project-color' style='background: ${$(colors[1]).text()}'></div>
+        <div class='project-color' style='background: ${$(colors[2]).text()}'></div>
+        <div class='project-color' style='background: ${$(colors[3]).text()}'></div>
+        <div class='project-color' style='background: ${$(colors[4]).text()}'></div>
+      </div>
+      <img src='./images/delete.svg' class="delete-palette-btn"/>
+    </article>`
+  const selectedProject = $('.select-project option:selected').text()
+  $('.project-name').each(function() {
+    if ($(this).text() === selectedProject) {
+      $(this).parent().append(savedPalette)
+    }
+  })
 }
 
 function updateProjectSelections() {
   const projectNames = $('.project-name')
-  console.log(projectNames)
   projectNames.each(function(i) {
     const newOption = `<option value=${$(this).text()}>${$(this).text()}</option>`
     $('.select-project').append(newOption)
