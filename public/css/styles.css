@@ -122,6 +122,20 @@ header {
   display: none;
 }
 
+.create-new-project-heading {
+  display: inline-block;
+  font-size: 20px;
+  color: white;
+}
+
+.collapse-new-project-section {
+  height: 25px;
+  width: 25px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .projects-heading {
   color: #1E2C47;
   font-family: 'Roboto', sans-serif;
@@ -152,6 +166,10 @@ header {
   color: #FFE25A;
   margin: 0 0 5px 0;
   font-family: 'Roboto', sans-serif;
+}
+
+.display-block {
+  display: block;
 }
 
 .color-container {

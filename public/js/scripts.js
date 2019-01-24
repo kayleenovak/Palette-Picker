@@ -1,5 +1,6 @@
 $('.generate-palette-btn').on('click', generateNewPalette)
 $('.unlock-img').on('click', toggleLock)
+$('.add-project-btn').on('click', toggleDisplayCreateProject)
 
 generateNewPalette()
 
@@ -90,5 +91,5 @@ function createNewProject() {
 }
 
 function toggleDisplayCreateProject() {
-  $('.new-project-section').style.display = 'block'
+  $('.new-project-section').addClass('display-block')
 }
