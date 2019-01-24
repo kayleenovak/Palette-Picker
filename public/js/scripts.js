@@ -1,6 +1,7 @@
 $('.generate-palette-btn').on('click', generateNewPalette)
 $('.unlock-img').on('click', toggleLock)
 $('.create-project-btn').on('click', createNewProject)
+$('.save-palette-btn').on('click', savePalette)
 
 generateNewPalette()
 
@@ -84,10 +85,13 @@ function splitRGB(string) {
 
 function createNewProject(e) {
   e.preventDefault()
-  console.log(1)
   const projectName = $('.name-project-input').val()
   const newProject = `<section class="project">
       <h5 class="project-name">${projectName}</h5>
     </section>`
   $('.projects').append(newProject)
+}
+
+function savePalette() {
+
 }
