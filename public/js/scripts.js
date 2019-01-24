@@ -88,8 +88,13 @@ function splitRGB(string) {
 function createNewProject(e) {
   e.preventDefault()
   const projectName = $('.name-project-input').val()
+  appendProject(projectName)
+  updateProjectSelections()
+}
+
+function appendProject(name) {
   const newProject = `<section class="project">
-      <h5 class="project-name">${projectName}</h5>
+      <h5 class="project-name">${name}</h5>
     </section>`
   $('.projects').append(newProject)
   updateProjectSelections()
@@ -144,7 +149,8 @@ function fetchProjects () {
   fetch('http://localhost:3000/api/v1/projects')
     .then(response => response.json())
     .then(projects => {
-      console.log(projects)  
-      return projects
+      projects.forEach(project => {
+        appendProject(project.project)
+      })
     })
 }
