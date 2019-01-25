@@ -57,7 +57,7 @@ app.post('/api/v1/palettes', (request, response) => {
   database('palettes').insert(palette, 'id')
 })
 
-app.listen(3000, () => {
+app.listen(app.get('port'), () => {
   console.log('Palette Picker running on localhost:3000')
 })
 
