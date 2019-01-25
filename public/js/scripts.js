@@ -76,11 +76,11 @@ splitRGB = (string) => {
   return newString
 }
 
-createNewProject = (e) => {
+createNewProject = async (e) => {
   e.preventDefault()
   const projectName = $('.name-project-input').val()
-  saveProjectToDb(projectName)
-  appendProject(projectName)
+  const id = await saveProjectToDb(projectName)
+  appendProject(projectName, id)
   updateProjectSelections()
 }
 
@@ -95,10 +95,12 @@ saveProjectToDb = async (projectName) => {
     },
     body: JSON.stringify(project)
   })
+  const id = await response.json()
+  return id
 }
 
-appendProject = (name) => {
-  const newProject = `<section class="project">
+appendProject = (name, id) => {
+  const newProject = `<section id=${id.id} class="project">
       <h5 class="project-name">${name}</h5>
     </section>`
   $('.projects').append(newProject)
