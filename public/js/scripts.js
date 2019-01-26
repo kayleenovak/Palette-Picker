@@ -99,9 +99,9 @@ saveProjectToDb = async (projectName) => {
 }
 
 appendProject = (name, id) => {
-  const newProject = `<section id='${id.id}' class="project">
-      <h5 class="project-name">${name}</h5>
-    </section>`
+  const newProject = `<section id='${id}' class="project">
+                        <h5 class="project-name">${name}</h5>
+                      </section>`
   $('.projects').append(newProject)
   updateProjectSelections()
 }
@@ -112,25 +112,27 @@ savePalette = (e) => {
   const colors = $('.hex-code')
   const hexCodes = [$(colors[0]).text(), $(colors[1]).text(), $(colors[2]).text(), $(colors[3]).text(), $(colors[4]).text()]
   const selectedProject = $('.select-project option:selected').text()
-  appendPalette(hexCodes, paletteName, selectedProject)
-  savePaletteToDb(paletteName, hexCodes)
+  const id = appendPalette(hexCodes, paletteName, selectedProject)
+  console.log(id)
+  savePaletteToDb(paletteName, hexCodes, id)
 }
 
-savePaletteToDb = async (name, colors) => {
-  const palettes = {
+savePaletteToDb = async (name, colors, id) => {
+  const palette = {
     name: name,
     color_one: colors[0],
     color_two: colors[1],
     color_three: colors[2],
     color_four: colors[3],
-    color_five: colors[4]
+    color_five: colors[4],
+    project_id: id
   }
   const response = await fetch('http://localhost:3000/api/v1/palettes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(project)
+    body: JSON.stringify(palette)
   })
 }
 
@@ -145,11 +147,14 @@ const appendPalette = (colors, name, selectedProject) => {
       <img src='./images/delete.svg' class="delete-palette-btn"/>
     </article>`
   const projects = $('.project-name')
+  let id
   $('.project-name').each((i, element) => {
     if ($(element).text() === selectedProject) {
       $(element).parent().append(savedPalette)
+      id = $(element).parent().attr('id')
     }
   })
+  return id
 }
 
 updateProjectSelections = () => {
@@ -191,7 +196,6 @@ const fetchProjects = async () => {
 
 const appendSavedProjects = (projects, palettes) => {
   projects.forEach(project => {
-    console.log(project)
     appendProject(project.project, project.id)
     const matchingPalettes = palettes.filter(palette => {
       return palette.project_id === project.id

@@ -50,11 +50,13 @@ app.post('/api/v1/palettes', (request, response) => {
   for (let requiredParam of ['name', 'color_one', 'color_two', 'color_three', 'color_four', 'color_five', 'project_id']) {
     if(!palette[requiredParam]) {
       return response.status(422)
-        .send({error: `Expected format to create a new project is: { project: <String> }. You are missing a ${ requiredParam } property.`})
+        .send({error: `Expected format to create a new project is: { name: <String> }. You are missing a ${ requiredParam } property.`})
     }
   }
 
   database('palettes').insert(palette, 'id')
+    .then(palette => response.status(201).json({ id: palette[0] }))
+    .catch(error => response.status(500).json({ error }))
 })
 
 app.listen(app.get('port'), () => {
