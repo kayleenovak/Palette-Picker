@@ -79,8 +79,7 @@ splitRGB = (string) => {
 createNewProject = async (e) => {
   e.preventDefault()
   const projectName = $('.name-project-input').val()
-  const id = await saveProjectToDb(projectName)
-  appendProject(projectName, id)
+  saveProjectToDb(projectName)
   updateProjectSelections()
 }
 
@@ -96,11 +95,11 @@ saveProjectToDb = async (projectName) => {
     body: JSON.stringify(project)
   })
   const id = await response.json()
-  return id
+  await appendProject(projectName, id)
 }
 
 appendProject = (name, id) => {
-  const newProject = `<section id=${id.id} class="project">
+  const newProject = `<section id='${id.id}' class="project">
       <h5 class="project-name">${name}</h5>
     </section>`
   $('.projects').append(newProject)
@@ -187,12 +186,13 @@ const fetchProjects = async () => {
   const palettes = await fetchPalettes()
   const response = await fetch('http://localhost:3000/api/v1/projects')
   const projects = await response.json()
-  appendSavedProjects(projects, palettes)
+  await appendSavedProjects(projects, palettes)
 }
 
 const appendSavedProjects = (projects, palettes) => {
   projects.forEach(project => {
-    appendProject(project.project)
+    console.log(project)
+    appendProject(project.project, project.id)
     const matchingPalettes = palettes.filter(palette => {
       return palette.project_id === project.id
     }).forEach(palette => {
