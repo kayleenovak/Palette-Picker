@@ -112,9 +112,10 @@ savePalette = (e) => {
   const colors = $('.hex-code')
   const hexCodes = [$(colors[0]).text(), $(colors[1]).text(), $(colors[2]).text(), $(colors[3]).text(), $(colors[4]).text()]
   const selectedProject = $('.select-project option:selected').text()
-  const id = appendPalette(hexCodes, paletteName, selectedProject)
-  console.log(id)
-  savePaletteToDb(paletteName, hexCodes, id)
+  const projectId = findProjectId(selectedProject)
+  const paletteId = savePaletteToDb(paletteName, hexCodes, projectId)
+  console.log(paletteId)
+  appendPalette(hexCodes, paletteName, selectedProject, paletteId)
 }
 
 savePaletteToDb = async (name, colors, id) => {
@@ -134,11 +135,12 @@ savePaletteToDb = async (name, colors, id) => {
     },
     body: JSON.stringify(palette)
   })
+  return response.id
 }
 
-const appendPalette = (colors, name, selectedProject) => {
-  const savedPalette = `<article class="color-container">
-      <h6 class="palette-name" id=${name}>${name}</h6>
+const appendPalette = (colors, name, selectedProject, id) => {
+  const savedPalette = `<article class="color-container" id=${id}>
+      <h6 class="palette-name">${name}</h6>
       <div class='project-color' style='background: ${colors[0]}'></div>
       <div class='project-color' style='background: ${colors[1]}'></div>
       <div class='project-color' style='background: ${colors[2]}'></div>
@@ -147,10 +149,18 @@ const appendPalette = (colors, name, selectedProject) => {
       <img src='./images/delete.svg' class="delete-palette-btn"/>
     </article>`
   const projects = $('.project-name')
-  let id
   $('.project-name').each((i, element) => {
     if ($(element).text() === selectedProject) {
       $(element).parent().append(savedPalette)
+    }
+  })
+}
+
+const findProjectId = (selectedProject) => {
+  const projects = $('.project-name')
+  let id
+  $('.project-name').each((i, element) => {
+    if ($(element).text() === selectedProject) {
       id = $(element).parent().attr('id')
     }
   })
@@ -166,19 +176,20 @@ updateProjectSelections = () => {
 }
 
 displayProjectColors = (e) => {
+  console.log(e.target.classList)
   const rgbCodes = []
   if (e.target.classList.contains('project-name') || e.target.classList.contains('project-color')) {
     const children = $(e.target).parent().children('div')
     children.each((i, element) => {
       rgbCodes.push(element.style.background)
     })
+    const hexCodes = []
+    for(let i = 0; i < 5; i++) {
+      hexCodes.push(convertRGBToHex(rgbCodes[i]))
+    }
+    updatePaletteColors(hexCodes)
+    updateHexCodes(hexCodes)
   }
-  const hexCodes = []
-  for(let i = 0; i < 5; i++) {
-    hexCodes.push(convertRGBToHex(rgbCodes[i]))
-  }
-  updatePaletteColors(hexCodes)
-  updateHexCodes(hexCodes)
 }
 
 const fetchPalettes = async () => {
@@ -194,6 +205,20 @@ const fetchProjects = async () => {
   await appendSavedProjects(projects, palettes)
 }
 
+const deletePalette = async (e) => {
+  if(e.target.classList.contains('delete-palette-btn')) {
+    const id = $(e.target).parent().attr('id')
+    const palette = {
+      id
+    }
+    const response = await fetch(`http://localhost:3000/api/v1/palettes/${id}`, 
+    {
+      method: 'DELETE',
+      body: JSON.stringify(palette)
+    })
+  }
+}
+
 const appendSavedProjects = (projects, palettes) => {
   projects.forEach(project => {
     appendProject(project.project, project.id)
@@ -201,7 +226,7 @@ const appendSavedProjects = (projects, palettes) => {
       return palette.project_id === project.id
     }).forEach(palette => {
       const colors = [palette.color_one, palette.color_two, palette.color_three, palette.color_four, palette.color_five]
-      appendPalette(colors, palette.name, project.project)
+      appendPalette(colors, palette.name, project.project, palette.id)
     })
   })
 }
@@ -214,3 +239,4 @@ $('.unlock-img').on('click', toggleLock)
 $('.create-project-btn').on('click', createNewProject)
 $('.save-palette-btn').on('click', savePalette)
 $('.projects').on('click', displayProjectColors)
+$('.projects').on('click', deletePalette)

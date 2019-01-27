@@ -59,6 +59,15 @@ app.post('/api/v1/palettes', (request, response) => {
     .catch(error => response.status(500).json({ error }))
 })
 
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const palette = request.param('id')
+  database('palettes')
+    .where('id', palette)
+    .del()
+  .then(palette => response.status(202).json({ id: palette[0]}))
+  .catch(error => response.status(500).json({ error }))
+})
+
 app.listen(app.get('port'), () => {
   console.log('Palette Picker running on localhost:3000')
 })
