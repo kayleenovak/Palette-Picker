@@ -192,16 +192,24 @@ displayProjectColors = (e) => {
 }
 
 const fetchPalettes = async () => {
-  const response = await fetch('http://localhost:3000/api/v1/palettes')
-  const palettes = await response.json()
-  return palettes
+  try {
+    const response = await fetch('http://localhost:3000/api/v1/palettes')
+    const palettes = await response.json()
+    return palettes
+  } catch (error) {
+
+  }
 }
 
 const fetchProjects = async () => {
-  const palettes = await fetchPalettes()
-  const response = await fetch('http://localhost:3000/api/v1/projects')
-  const projects = await response.json()
-  await appendSavedProjects(projects, palettes)
+  try {
+    const palettes = await fetchPalettes()
+    const response = await fetch('http://localhost:3000/api/v1/projects')
+    const projects = await response.json()
+    appendSavedProjects(projects, palettes)
+  } catch (error) {
+
+  }
 }
 
 const deletePalette = async (e) => {
@@ -210,13 +218,17 @@ const deletePalette = async (e) => {
     const palette = {
       id
     }
-    const response = await fetch(`http://localhost:3000/api/v1/palettes/${id}`, 
-    {
-      method: 'DELETE',
-      body: JSON.stringify(palette)
-    })
-  }
-  $(e.target).parent().remove()
+    try {
+      const response = await fetch(`http://localhost:3000/api/v1/palettes/${id}`, 
+      {
+        method: 'DELETE',
+        body: JSON.stringify(palette)
+      })
+    }
+    $(e.target).parent().remove()
+    } catch (error) {
+      
+    }
 }
 
 const appendSavedProjects = (projects, palettes) => {
