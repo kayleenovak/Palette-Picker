@@ -49,6 +49,7 @@ app.post('/api/v1/palettes', (request, response) => {
   const palette = request.body;
   for (let requiredParam of ['name', 'color_one', 'color_two', 'color_three', 'color_four', 'color_five', 'project_id']) {
     if(!palette[requiredParam]) {
+      console.log(requiredParam)
       return response.status(422)
         .send({error: `Expected format to create a new project is: { name: <String> }. You are missing a ${ requiredParam } property.`})
     }

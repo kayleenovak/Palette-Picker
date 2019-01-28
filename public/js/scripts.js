@@ -106,15 +106,14 @@ appendProject = (name, id) => {
   updateProjectSelections()
 }
 
-savePalette = (e) => {
+savePalette = async (e) => {
   e.preventDefault()
   const paletteName = $('.name-palette-input').val()
   const colors = $('.hex-code')
   const hexCodes = [$(colors[0]).text(), $(colors[1]).text(), $(colors[2]).text(), $(colors[3]).text(), $(colors[4]).text()]
   const selectedProject = $('.select-project option:selected').text()
   const projectId = findProjectId(selectedProject)
-  const paletteId = savePaletteToDb(paletteName, hexCodes, projectId)
-  console.log(paletteId)
+  const paletteId = await savePaletteToDb(paletteName, hexCodes, projectId)
   appendPalette(hexCodes, paletteName, selectedProject, paletteId)
 }
 
@@ -135,7 +134,8 @@ savePaletteToDb = async (name, colors, id) => {
     },
     body: JSON.stringify(palette)
   })
-  return response.id
+  const savedPalette = await response.json()
+  return savedPalette.id
 }
 
 const appendPalette = (colors, name, selectedProject, id) => {
@@ -176,7 +176,6 @@ updateProjectSelections = () => {
 }
 
 displayProjectColors = (e) => {
-  console.log(e.target.classList)
   const rgbCodes = []
   if (e.target.classList.contains('project-name') || e.target.classList.contains('project-color')) {
     const children = $(e.target).parent().children('div')
@@ -217,6 +216,7 @@ const deletePalette = async (e) => {
       body: JSON.stringify(palette)
     })
   }
+  $(e.target).parent().remove()
 }
 
 const appendSavedProjects = (projects, palettes) => {
@@ -231,6 +231,15 @@ const appendSavedProjects = (projects, palettes) => {
   })
 }
 
+const checkInputs = (e) => {
+  console.log(e.target)
+  if($(e.target).val() === '') {
+    $(e.target).next().prop('disabled', true)
+  } else {
+    $(e.target).next().prop('disabled', false)
+  }
+}
+
 generateNewPalette()
 fetchProjects()
 
@@ -240,3 +249,5 @@ $('.create-project-btn').on('click', createNewProject)
 $('.save-palette-btn').on('click', savePalette)
 $('.projects').on('click', displayProjectColors)
 $('.projects').on('click', deletePalette)
+$('.name-project-input').on('keyup', checkInputs)
+$('.name-palette-input').on('keyup', checkInputs)
