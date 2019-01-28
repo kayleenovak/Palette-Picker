@@ -87,7 +87,7 @@ saveProjectToDb = async (projectName) => {
   const project = { 
     project: projectName
   }
-  const response = await fetch('http://localhost:3000/api/v1/projects', {
+  const response = await fetch('/api/v1/projects', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ savePaletteToDb = async (name, colors, id) => {
     color_five: colors[4],
     project_id: id
   }
-  const response = await fetch('http://localhost:3000/api/v1/palettes', {
+  const response = await fetch('/api/v1/palettes', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
