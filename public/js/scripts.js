@@ -224,11 +224,11 @@ const deletePalette = async (e) => {
         method: 'DELETE',
         body: JSON.stringify(palette)
       })
-    }
-    $(e.target).parent().remove()
+      $(e.target).parent().remove()
     } catch (error) {
       
     }
+}
 }
 
 const appendSavedProjects = (projects, palettes) => {
@@ -244,7 +244,6 @@ const appendSavedProjects = (projects, palettes) => {
 }
 
 const checkInputs = (e) => {
-  console.log(e.target)
   if($(e.target).val() === '') {
     $(e.target).next().prop('disabled', true)
   } else {
