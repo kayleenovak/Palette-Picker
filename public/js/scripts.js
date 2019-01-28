@@ -95,7 +95,7 @@ saveProjectToDb = async (projectName) => {
     body: JSON.stringify(project)
   })
   const id = await response.json()
-  await appendProject(projectName, id)
+  await appendProject(projectName, id.id)
 }
 
 appendProject = (name, id) => {
