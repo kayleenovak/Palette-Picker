@@ -193,7 +193,7 @@ displayProjectColors = (e) => {
 
 const fetchPalettes = async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/v1/palettes')
+    const response = await fetch('/api/v1/palettes')
     const palettes = await response.json()
     return palettes
   } catch (error) {
@@ -204,7 +204,7 @@ const fetchPalettes = async () => {
 const fetchProjects = async () => {
   try {
     const palettes = await fetchPalettes()
-    const response = await fetch('http://localhost:3000/api/v1/projects')
+    const response = await fetch('/api/v1/projects')
     const projects = await response.json()
     appendSavedProjects(projects, palettes)
   } catch (error) {
@@ -219,7 +219,7 @@ const deletePalette = async (e) => {
       id
     }
     try {
-      const response = await fetch(`http://localhost:3000/api/v1/palettes/${id}`, 
+      const response = await fetch(`/api/v1/palettes/${id}`, 
       {
         method: 'DELETE',
         body: JSON.stringify(palette)
