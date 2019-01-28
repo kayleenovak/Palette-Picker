@@ -79,8 +79,25 @@ splitRGB = (string) => {
 createNewProject = async (e) => {
   e.preventDefault()
   const projectName = $('.name-project-input').val()
-  saveProjectToDb(projectName)
-  updateProjectSelections()
+  const duplicateProjects = checkForDuplicateProjects(projectName)
+  console.log(duplicateProjects)
+  if(!duplicateProjects.length) {
+    saveProjectToDb(projectName)
+    updateProjectSelections()
+  } else {
+    $('.error-popup').addClass('display-block')
+  }
+  clearInputs(e)
+}
+
+checkForDuplicateProjects = (projectName) => {
+  const duplicateProjects = []
+  $('.project-name').each((i, element) => {
+    if ($(element).text() === projectName) {
+      duplicateProjects.push($(element).text())
+    }
+  })
+  return duplicateProjects
 }
 
 saveProjectToDb = async (projectName) => {
@@ -115,6 +132,7 @@ savePalette = async (e) => {
   const projectId = findProjectId(selectedProject)
   const paletteId = await savePaletteToDb(paletteName, hexCodes, projectId)
   appendPalette(hexCodes, paletteName, selectedProject, paletteId)
+  clearInputs(e)
 }
 
 savePaletteToDb = async (name, colors, id) => {
@@ -169,6 +187,9 @@ const findProjectId = (selectedProject) => {
 
 updateProjectSelections = () => {
   const projectNames = $('.project-name')
+  $('.select-project').children().each((i, element) => {
+    $(element).remove()
+  })
   projectNames.each((i, element) => {
     const newOption = `<option value=${$(element).text()}>${$(element).text()}</option>`
     $('.select-project').append(newOption)
@@ -251,6 +272,18 @@ const checkInputs = (e) => {
   }
 }
 
+const displayPopup = () => {
+  $('.error-popup').addClass('display-block')
+}
+
+const collapsePopup = () => {
+  $('.error-popup').removeClass('display-block')
+}
+
+const clearInputs = (e) => {
+  $(e.target).prev().val('')
+}
+
 generateNewPalette()
 fetchProjects()
 
@@ -262,3 +295,4 @@ $('.projects').on('click', displayProjectColors)
 $('.projects').on('click', deletePalette)
 $('.name-project-input').on('keyup', checkInputs)
 $('.name-palette-input').on('keyup', checkInputs)
+$('.collapse-popup-btn').on('click', collapsePopup)
