@@ -10,7 +10,7 @@ Palette Picker is deployed on Heroku: [Palette Picker](https://pick-a-palette.he
 - Express.js
 - Node.js
 - Knex
-- Postgresql
+- PostgreSQL
 
 ## Screen Shot
 
