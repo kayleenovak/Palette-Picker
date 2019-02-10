@@ -13,6 +13,8 @@ Palette Picker is deployed on Heroku: [Palette Picker](https://pick-a-palette.he
 - Node.js
 - Knex
 - PostgreSQL
+- Heroku
+- TravisCI
 
 ## Screen Shot
 
